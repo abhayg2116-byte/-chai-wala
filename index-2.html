@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17120f">
+<title>Chai Wala — thodi chai, thodi yaadein</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+:root{--ink:#f7ead6;--muted:#c2ad95;--chai:#d78a46;--rust:#8c4829;--night:#17120f;--glass:rgba(38,29,23,.74)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:var(--night);color:var(--ink);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-3;background:radial-gradient(ellipse at 50% 40%,rgba(151,76,35,.22),transparent 42%),linear-gradient(125deg,#17120f 0%,#261912 47%,#100e0c 100%)}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:5;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");mix-blend-mode:screen}
+.ambient{position:fixed;width:480px;height:480px;left:50%;top:28%;transform:translate(-50%,-50%);border-radius:50%;background:#a65020;filter:blur(140px);opacity:.16;z-index:-2;animation:breathe 7s ease-in-out infinite alternate}
+@keyframes breathe{to{opacity:.27;transform:translate(-50%,-46%) scale(1.12)}}
+nav{height:82px;padding:0 6vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff12;position:relative;z-index:2}
+.brand{font-family:'Playfair Display',serif;font-size:21px;letter-spacing:.02em}.brand span{color:var(--chai)}
+.nav-right,.eyebrow,.micro{font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--muted)}
+.open-sign{display:flex;align-items:center;gap:9px}.dot{width:7px;height:7px;background:#a7b779;border-radius:50%;box-shadow:0 0 12px #a7b779}
+main{max-width:1250px;margin:auto;padding:0 6vw 220px}
+.hero{min-height:calc(100vh - 82px);display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4vw;padding:42px 0 70px}
+.copy{position:relative;z-index:1;animation:rise 1s both}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:25px}.eyebrow:before{content:"";width:34px;height:1px;background:var(--chai)}
+h1{font-family:'Playfair Display',serif;font-size:clamp(66px,9.3vw,132px);line-height:.84;letter-spacing:-.065em;font-weight:500;margin:0 0 28px}
+h1 em{font-weight:500;color:var(--chai);display:block;font-style:italic;padding-left:7vw}
+.lead{font-size:15px;line-height:1.85;color:#d3c0aa;max-width:410px;margin:0 0 28px}
+.stamp{display:inline-flex;align-items:center;gap:12px;border:1px solid #d78a464d;padding:12px 15px;border-radius:2px;color:#edc59c;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.stamp b{font-weight:400;color:var(--chai);font-size:15px}
+.scene{height:min(590px,67vw);min-height:400px;position:relative;display:grid;place-items:center;isolation:isolate;animation:rise 1.2s .15s both}
+.scene:before{content:"";position:absolute;width:85%;aspect-ratio:1;border:1px solid #e7a56820;border-radius:50%;box-shadow:0 0 80px #b15e2720,inset 0 0 80px #b15e2710}
+.scene:after{content:"";position:absolute;width:66%;aspect-ratio:1;border:1px dashed #e7a56824;border-radius:50%;animation:spin 70s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sun{position:absolute;width:70%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 45% 38%,#d88949 0%,#a95329 34%,#502819 62%,transparent 70%);filter:blur(1px);opacity:.65;transform:translate(3%,-3%)}
+.table-shadow{position:absolute;width:92%;height:19%;bottom:13%;border-radius:50%;background:#0009;filter:blur(22px)}
+.cup-wrap{position:relative;width:68%;max-width:350px;aspect-ratio:1.05;transform:translateY(2%);filter:drop-shadow(0 26px 20px #0008);transition:transform .5s}
+.cup-wrap:hover{transform:translateY(-6px) rotate(-1deg)}
+.cup{position:absolute;left:12%;top:17%;width:70%;height:62%;border-radius:10% 10% 44% 44% / 8% 8% 25% 25%;background:linear-gradient(105deg,#a7a098 0%,#e4d5bc 13%,#b6a38b 28%,#eee0c9 48%,#9d8a73 75%,#d5c3a9 100%);box-shadow:inset 12px 0 16px #fff6,inset -16px -10px 22px #51403380;clip-path:polygon(0 0,100% 0,89% 75%,72% 100%,25% 100%,9% 75%)}
+.cup:before{content:"";position:absolute;left:4%;right:4%;top:4%;height:15%;border-radius:50%;background:linear-gradient(#544031,#23170f 68%,#c8a17c 75%,#8d6848 100%);box-shadow:inset 0 3px 7px #000b}
+.cup:after{content:"CHAI";position:absolute;left:0;right:0;top:48%;text-align:center;color:#71422b;font-family:'Playfair Display',serif;font-size:clamp(15px,2vw,25px);letter-spacing:.2em;transform:rotate(-4deg);opacity:.78}
+.handle{position:absolute;left:72%;top:30%;width:31%;height:34%;border:17px solid #c8b59a;border-left-color:#e1d2ba;border-radius:50%;box-shadow:inset -5px 0 7px #6a5949,4px 4px 8px #0005;z-index:-1}
+.saucer{position:absolute;left:3%;top:68%;width:90%;height:17%;border-radius:50%;background:linear-gradient(180deg,#e5d4b8,#8f7a61 50%,#d8c5a7 70%,#6c5948);box-shadow:0 14px 20px #0006,inset 0 4px 8px #fff8}
+.saucer:after{content:"";position:absolute;inset:14% 9%;border-radius:50%;border:2px solid #6c4d34;opacity:.45}
+.steam{position:absolute;top:-5%;left:34%;width:50%;height:33%;display:flex;gap:15px;justify-content:center;filter:blur(1px)}
+.steam i{display:block;width:15px;height:85px;border-left:2px solid #f4ddc1aa;border-radius:50%;transform:rotate(12deg);animation:steam 3.2s ease-in-out infinite}
+.steam i:nth-child(2){height:105px;animation-delay:.7s;transform:rotate(-9deg)}.steam i:nth-child(3){height:73px;animation-delay:1.3s;transform:rotate(18deg)}
+@keyframes steam{0%,100%{opacity:0;transform:translateY(18px) scaleY(.75)}45%{opacity:.8}70%{opacity:.2;transform:translateY(-15px) scaleY(1.1)}}
+.floating-note{position:absolute;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#d6b28d}.note-a{top:14%;right:0}.note-b{bottom:17%;left:-1%}.note-c{right:3%;bottom:30%;writing-mode:vertical-rl}
+.tiny-line{position:absolute;width:40px;height:1px;background:#d78a4680;top:17%;right:13%}
+.side-label{position:absolute;left:0;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:left center;font:10px 'DM Mono',monospace;letter-spacing:.22em;color:#8d7761;text-transform:uppercase}
+.marquee{border-top:1px solid #ffffff1a;border-bottom:1px solid #ffffff1a;overflow:hidden;white-space:nowrap;padding:17px 0;color:#bd8a5d;font:10px 'DM Mono',monospace;letter-spacing:.2em;text-transform:uppercase}
+.marquee-track{display:inline-block;animation:marquee 28s linear infinite}.marquee span{padding:0 27px}.marquee b{color:#e6c19b;font-weight:400}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.memory{padding:110px 0 75px;display:grid;grid-template-columns:.7fr 1.3fr;gap:8vw;align-items:start}
+.section-kicker{font:10px 'DM Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--chai)}
+.memory h2{font:500 clamp(32px,4.5vw,54px)/1.08 'Playfair Display',serif;letter-spacing:-.035em;margin:18px 0}
+.memory p{color:#b9a58f;font-size:13px;line-height:1.9;max-width:300px}
+.quote-card{min-height:220px;border-top:1px solid #d78a4655;border-bottom:1px solid #d78a462e;padding:34px 0;display:flex;flex-direction:column;justify-content:space-between}
+.quote-mark{font:58px 'Playfair Display',serif;color:#b66b3a;line-height:.6}
+.quote-text{font:500 clamp(24px,3.5vw,42px)/1.28 'Playfair Display',serif;max-width:690px;transition:opacity .35s,transform .35s}
+.quote-meta{display:flex;justify-content:space-between;align-items:center;margin-top:30px;font:9px 'DM Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:#9f8871}
+.quote-dots{display:flex;gap:5px}.quote-dots i{width:4px;height:4px;background:#65422c;border-radius:50%}.quote-dots i.active{background:var(--chai);box-shadow:0 0 8px var(--chai)}
+.details{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #ffffff16;margin:35px 0 60px}
+.detail{padding:22px 20px 20px 0;border-right:1px solid #ffffff12}.detail:not(:first-child){padding-left:22px}.detail:last-child{border:0}
+.detail .icon{font-size:20px;margin-bottom:13px;color:#d18b51}.detail h3{font:500 17px 'Playfair Display',serif;margin:0 0 8px}.detail p{font-size:11px;line-height:1.7;color:#a9937c;margin:0}
+footer{border-top:1px solid #ffffff16;padding:25px 0;display:flex;justify-content:space-between;gap:20px;color:#8f7a66;font:9px 'DM Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.player{position:fixed;z-index:10;left:50%;bottom:18px;transform:translateX(-50%);width:min(520px,calc(100% - 28px));border:1px solid #ffffff24;border-radius:16px;background:rgba(28,22,18,.84);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 20px 70px #0008;padding:14px 18px 13px;display:grid;grid-template-columns:1fr auto;gap:10px 18px;max-height:48vh;overflow:auto}
+.player.collapsed{max-height:90px}.player-top{display:flex;align-items:center;gap:13px;min-width:0}
+.album{width:47px;height:47px;flex-shrink:0;border-radius:8px;background:radial-gradient(circle at 40% 35%,#e5b77d,#9e542b 43%,#29180f 75%);display:grid;place-items:center;font-size:21px;box-shadow:inset 0 0 0 1px #ffffff30}
+.track-info{min-width:0}.track-name{font:500 14px 'Playfair Display',serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.track-sub{font:9px 'DM Mono',monospace;color:#a9927c;letter-spacing:.08em;margin-top:5px;text-transform:uppercase}
+.controls{display:flex;align-items:center;gap:15px}.control{border:0;background:transparent;color:#e8d7c3;cursor:pointer;font-size:17px;padding:5px;transition:color .2s,transform .2s}.control:hover{color:var(--chai);transform:scale(1.08)}.play{width:39px;height:39px;border-radius:50%;background:#e2b17d;color:#27170f;font-size:16px;display:grid;place-items:center}.play:hover{color:#27170f;background:#f1c796}
+.player-bottom{grid-column:1/-1;display:flex;align-items:center;gap:12px}.time{font:9px 'DM Mono',monospace;color:#9d8975;min-width:28px}.progress{height:3px;flex:1;background:#ffffff20;border-radius:10px;overflow:hidden;cursor:pointer}.progress-fill{height:100%;width:0%;background:#d9a16a;transition:width .2s linear}.spotify-link{font:9px 'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#c7aa8d;text-decoration:none;white-space:nowrap}.spotify-link:hover{color:#f1c796}
+.spotify-embed{width:100%;margin-top:6px}.spotify-embed iframe{display:block;width:100%;height:152px;border:0;border-radius:12px;background:#181818}.player.expanded{grid-template-columns:1fr auto}.player.expanded .spotify-embed{grid-column:1/-1}.player.expanded .player-bottom{grid-column:1/-1}
+.toast{position:fixed;z-index:20;left:50%;top:24px;transform:translate(-50%,-20px);opacity:0;background:#eee0c9;color:#2b1b11;padding:12px 18px;border-radius:4px;font:11px 'DM Mono',monospace;letter-spacing:.06em;pointer-events:none;transition:all .3s}.toast.show{opacity:1;transform:translate(-50%,0)}
+.kettle-hint{position:absolute;bottom:5%;right:1%;font:9px 'DM Mono',monospace;color:#a88b70;letter-spacing:.08em;text-align:right}
+@media(max-width:760px){.player{max-height:44vh;padding:10px}.spotify-embed iframe{height:152px}nav{height:68px;padding:0 22px}.nav-right{font-size:8px}main{padding:0 22px 220px}.hero{grid-template-columns:1fr;gap:0;padding-top:58px;min-height:auto}.copy{padding-bottom:10px}h1{font-size:clamp(76px,19vw,120px)}h1 em{padding-left:15vw}.lead{font-size:13px;max-width:340px}.scene{height:390px;min-height:0;margin-top:10px}.side-label{left:-4px}.floating-note{font-size:8px}.memory{grid-template-columns:1fr;gap:24px;padding:80px 0 45px}.memory p{max-width:420px}.quote-card{min-height:205px}.details{margin-bottom:40px}.player{bottom:8px;padding:12px;gap:8px 10px}.album{width:40px;height:40px}.track-name{font-size:12px}.track-sub{font-size:8px}.controls{gap:8px}.control{font-size:15px}.play{width:35px;height:35px}.spotify-link{font-size:8px}.player-bottom{gap:8px}footer{font-size:8px}}
+@media(max-width:390px){.scene{height:320px}.details{grid-template-columns:1fr}.detail,.detail:not(:first-child){border-right:0;border-bottom:1px solid #ffffff12;padding:16px 0;display:grid;grid-template-columns:35px 1fr;column-gap:10px}.detail .icon{grid-row:span 2;margin:0}.detail h3{align-self:end}.detail p{grid-column:2}.spotify-link{display:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="ambient"></div><div class="grain"></div><div class="toast" id="toast">Bas, chai ready hai.</div>
+<nav><div class="brand">chai<span>.</span>wala</div><div class="nav-right open-sign"><i class="dot"></i> TAPRI OPEN · SINCE ALWAYS</div></nav>
+<main>
+<section class="hero">
+  <div class="copy">
+    <div class="eyebrow">A little cup of nostalgia</div>
+    <h1>Chai<br><em>Wala.</em></h1>
+    <p class="lead">Woh cutting chai, woh baarish ki khushboo, aur dost jo bas “5 minute” bolke ek ghanta baith jaate hain. Kuch yaadein garam hi achhi lagti hain.</p>
+    <div class="stamp"><b>✳</b> Adrak extra · Duniya thodi slow</div>
+  </div>
+  <div class="scene" id="scene" aria-label="Illustration of a steaming cup of chai">
+    <div class="side-label">Garam hai, sambhal ke</div><div class="sun"></div><div class="table-shadow"></div>
+    <div class="cup-wrap" id="cup"><div class="steam"><i></i><i></i><i></i></div><div class="handle"></div><div class="saucer"></div><div class="cup"></div></div>
+    <div class="floating-note note-a">₹ 10 / cutting</div><div class="tiny-line"></div><div class="floating-note note-b">Ek aur ho jaaye?</div><div class="floating-note note-c">☼ 6:17 PM · tapri time</div>
+    <div class="kettle-hint">TAP / PRESS SPACE<br>FOR A LITTLE TAPRI MAGIC</div>
+  </div>
+</section>
+</main>
+<div class="marquee"><div class="marquee-track"><span>Cutting chai</span>✳<span><b>Yaar, ek aur dena</b></span>✳<span>Rain on tin roof</span>✳<span>Garam glass, thandi shaam</span>✳<span>Bas 5 minute</span>✳<span>Cutting chai</span>✳<span><b>Yaar, ek aur dena</b></span>✳<span>Rain on tin roof</span>✳<span>Garam glass, thandi shaam</span>✳<span>Bas 5 minute</span>✳</div></div>
+<main>
+<section class="memory">
+  <div><div class="section-kicker">01 / The little things</div><h2>Somewhere between<br>sip &amp; silence.</h2><p>Not just chai. It’s the pause between two busy days, the adda that fixes nothing and somehow fixes everything.</p></div>
+  <div class="quote-card"><div class="quote-mark">“</div><div class="quote-text" id="quote">Zindagi mein sab kuch mil sakta hai… bas tapri wali chai aur woh purane dost dobara nahi milte.</div><div class="quote-meta"><span id="quote-source">Tapri diaries · 001</span><span class="quote-dots" id="quote-dots"><i class="active"></i><i></i><i></i><i></i></span></div></div>
+</section>
+<section class="details">
+  <div class="detail"><div class="icon">☕</div><h3>Cutting, please.</h3><p>Half a glass. Full conversation. No rush.</p></div>
+  <div class="detail"><div class="icon">☂</div><h3>Baarish + chai.</h3><p>Rain on the tin roof. Ginger in the air. Perfect timing.</p></div>
+  <div class="detail"><div class="icon">♫</div><h3>One more song.</h3><p>Old melodies, shared earphones, and the long way home.</p></div>
+</section>
+<footer><span>Made of mitti, memories &amp; masala chai.</span><span>© Tapri after hours</span></footer>
+</main>
+
+<section class="player expanded" aria-label="Spotify music player">
+  <div class="player-top"><div class="album">♫</div><div class="track-info"><div class="track-name" id="trackName">Chai Wala — your playlist</div><div class="track-sub">Spotify playlist · play music right here</div></div></div>
+  <div class="controls"><button class="control" id="togglePlayer" aria-label="Collapse Spotify player" title="Show or hide playlist">⌄</button></div>
+  <div class="spotify-embed" id="spotifyEmbed"><iframe id="spotifyFrame" title="Chai Wala Spotify playlist" src="https://open.spotify.com/embed/playlist/7qvlVTwU4HbuVdvWkvXPvh?utm_source=generator&theme=0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+  <div class="player-bottom"><span class="time">CHAI</span><div class="progress"><div class="progress-fill" style="width:72%"></div></div><span class="time">VIBES</span><a class="spotify-link" href="https://open.spotify.com/playlist/7qvlVTwU4HbuVdvWkvXPvh?si=ksrApQ0-RyWukdwbtnKiEA&utm_source=copy-link" target="_blank" rel="noopener">Open playlist ↗</a></div>
+</section>
+<script>
+const playlist='https://open.spotify.com/playlist/7qvlVTwU4HbuVdvWkvXPvh?si=ksrApQ0-RyWukdwbtnKiEA&utm_source=copy-link';
+const quotes=[
+['Zindagi mein sab kuch mil sakta hai… bas tapri wali chai aur woh purane dost dobara nahi milte.','Tapri diaries · 001'],
+['“Bhai, ek kadak adrak wali bana.” Aur phir duniya ki saari problems discuss.','Tapri diaries · 002'],
+['Kuch log coffee pe milte hain. Apne log cutting chai pe waqt bhool jaate hain.','Tapri diaries · 003'],
+['The best conversations never had a reservation. Bas ek tapri, do dost, aur garam chai.','Tapri diaries · 004']
+];
+let qi=0;
+const quote=document.getElementById('quote'), source=document.getElementById('quote-source'), dots=[...document.querySelectorAll('#quote-dots i')];
+function rotateQuote(){quote.style.opacity=0;quote.style.transform='translateY(7px)';setTimeout(()=>{qi=(qi+1)%quotes.length;quote.textContent=quotes[qi][0];source.textContent=quotes[qi][1];dots.forEach((d,i)=>d.classList.toggle('active',i===qi));quote.style.opacity=1;quote.style.transform='translateY(0)'},350)}
+setInterval(rotateQuote,5000);
+const toast=document.getElementById('toast');
+let toastTimer;
+function showToast(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),1900)}
+let audioCtx;
+function chaiSound(){try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const now=audioCtx.currentTime;
+  // A soft cup clink followed by a tiny kettle-like shimmer.
+  [880,1174,1568].forEach((f,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sine';o.frequency.setValueAtTime(f,now+i*.075);g.gain.setValueAtTime(.0001,now+i*.075);g.gain.exponentialRampToValueAtTime(.075,now+i*.075+.012);g.gain.exponentialRampToValueAtTime(.0001,now+i*.075+.23);o.connect(g);g.connect(audioCtx.destination);o.start(now+i*.075);o.stop(now+i*.075+.25)});
+ }catch(e){}}
+function magic(){chaiSound();const cup=document.getElementById('cup');cup.animate([{transform:'translateY(2%) rotate(0)'},{transform:'translateY(-8%) rotate(2deg)'},{transform:'translateY(2%) rotate(0)'}],{duration:650,easing:'cubic-bezier(.2,.8,.2,1)'});showToast('Chai ki chuski. Dil ko sukoon. ☕')}
+document.getElementById('scene').addEventListener('click',magic);
+document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','TEXTAREA','BUTTON','A'].includes(document.activeElement.tagName)){e.preventDefault();magic()}});
+const player=document.querySelector('.player');
+const togglePlayer=document.getElementById('togglePlayer');
+const spotifyEmbed=document.getElementById('spotifyEmbed');
+togglePlayer.addEventListener('click',()=>{
+  const collapsed=player.classList.toggle('collapsed');
+  spotifyEmbed.style.display=collapsed?'none':'block';
+  togglePlayer.textContent=collapsed?'⌃':'⌄';
+  togglePlayer.setAttribute('aria-label',collapsed?'Expand Spotify player':'Collapse Spotify player');
+  if(collapsed){player.classList.remove('expanded');}else{player.classList.add('expanded');}
+});
+</script>
+</body>
+</html>
